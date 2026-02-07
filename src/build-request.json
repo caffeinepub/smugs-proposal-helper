@@ -1,0 +1,85 @@
+{
+  "kind": "build_request",
+  "title": "Enable real NNS motion proposal submission",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-11",
+      "text": "Add a backend method that submits a real NNS motion proposal to the NNS Governance canister (instead of only recording a simulated attempt). The method must accept the caller’s selected neuron ID and the motion proposal text, perform the appropriate NNS Governance cross-canister call, and return the created NNS proposal ID on success or a clear error on failure.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-12",
+          "msg-15"
+        ],
+        "quotes": [
+          "Enable real proposals for the nns",
+          "Please implement real porposals"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A new shared backend method exists to submit a motion proposal via an NNS Governance cross-canister call (not just writing to local history).",
+        "On success, the backend returns a real NNS proposal ID (not a local 'pending-*' placeholder).",
+        "On failure (e.g., authorization, invalid neuron, insufficient permissions), the backend returns a descriptive error message that can be shown to the user.",
+        "The method is protected so only authenticated users (AccessControl #user) can call it."
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Update the backend proposal history recording so that submitting a real motion proposal records: (1) a pending attempt when submission starts, and then (2) updates history with success including the real proposal ID, or failure including the returned error message. Keep the existing cap of the last 10 proposal attempts per user.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-10",
+          "msg-12"
+        ],
+        "quotes": [
+          "it won’t work because it’s not actually configured to push real proposals.",
+          "Enable real proposals for the nns"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When a proposal submission is initiated, a 'pending' ProposalAttempt is added for the caller.",
+        "After the NNS call resolves, a subsequent ProposalAttempt is recorded with status 'success' and includes the actual NNS proposal ID, or status 'failure' with the error text.",
+        "The proposalAttempts list remains capped at 10 entries, consistent with existing behavior."
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Wire the Proposal UI to call the new backend real-submission method and remove the current simulated submission messaging. The UI must show a clear success message containing the real proposal ID when the network call succeeds, and show the backend error message when it fails. Ensure the Activity History ‘Proposals’ table displays the real proposal ID and status for each submission.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-10",
+          "msg-12",
+          "msg-15"
+        ],
+        "quotes": [
+          "it won’t work because it’s not actually configured to push real proposals.",
+          "Enable real proposals for the nns",
+          "Please implement real porposals"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The Proposal tab no longer records a fake 'pending-<timestamp>' proposal ID as the primary submission behavior.",
+        "Clicking “Submit Proposal” triggers a backend call that attempts real NNS submission.",
+        "On success, the UI shows an English success message that includes the real proposal ID, and the history shows a corresponding Success row.",
+        "On failure, the UI shows the returned failure reason in English, and the history shows a corresponding Failed row with details."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor in backend/main.mo (no additional backend services).",
+    "Do not edit files under frontend/src/components/ui or any paths listed in frontend.immutablePaths.",
+    "Use English for all user-facing text."
+  ],
+  "nonGoals": [
+    "Do not add third-party JS packages such as @dfinity/nns.",
+    "Do not implement eligibility checks for stake/dissolve delay in this change; rely on NNS Governance to accept/reject the submission.",
+    "Do not add new authentication providers beyond Internet Identity."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Wire Proposal UI to real NNS motion submission",
+  "requirements": [
+    {
+      "id": "REQ-13",
+      "summary": "Update the Proposal UI to call the real backend motion-proposal submission method and display real proposal IDs and backend errors in the UI and history.",
+      "acceptanceCriteria": [
+        "The Proposal tab no longer records a fake 'pending-<timestamp>' proposal ID as the primary submission behavior.",
+        "Clicking “Submit Proposal” triggers a backend call that attempts real NNS submission.",
+        "On success, the UI shows an English success message that includes the real proposal ID, and the history shows a corresponding Success row.",
+        "On failure, the UI shows the returned failure reason in English, and the history shows a corresponding Failed row with details."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/backend.d.ts",
+          "operation": "modify",
+          "description": "Update the typed backend interface to include the new shared method for real motion proposal submission (accepting neuron ID and proposal text and returning the created proposal ID), so the frontend can call it in a type-safe way."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add a React Query mutation hook (e.g., useSubmitMotionProposal) that calls the new backend real-submission method, and on success invalidates the current user profile query so Activity History refreshes. Handle authorization trap errors gracefully per the authorization component’s frontend guidance; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/proposals/ProposalForm.tsx",
+          "operation": "modify",
+          "description": "Replace the simulated submission flow (including fake pending IDs and forced failure messaging) with a call to the new submit motion proposal hook. Show an English success message that includes the real proposal ID on success, and show the backend-provided English error message on failure. Keep existing validation for neuron ID and minimum text length."
+        },
+        {
+          "path": "frontend/src/components/history/ActivityHistory.tsx",
+          "operation": "modify",
+          "description": "Ensure the Proposals table renders the real proposal ID and status for each submission attempt. If proposalId is absent, display a clear placeholder (e.g., '—') while still showing status and details."
+        }
+      ]
+    }
+  ]
+}

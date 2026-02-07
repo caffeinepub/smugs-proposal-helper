@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dragon/Knight 16-bit arcade theme - warm dungeon palette */
+    /* Background: Deep stone dungeon */
+    --background: oklch(0.18 0.02 260);
+    --foreground: oklch(0.95 0.01 60);
+
+    /* Card: Weathered stone blocks */
+    --card: oklch(0.22 0.02 260);
+    --card-foreground: oklch(0.95 0.01 60);
+
+    /* Popover: Elevated stone */
+    --popover: oklch(0.24 0.02 260);
+    --popover-foreground: oklch(0.95 0.01 60);
+
+    /* Primary: Dragon fire ember */
+    --primary: oklch(0.62 0.20 35);
+    --primary-foreground: oklch(0.98 0.01 60);
+
+    /* Secondary: Knight's steel */
+    --secondary: oklch(0.35 0.03 240);
+    --secondary-foreground: oklch(0.95 0.01 60);
+
+    /* Muted: Shadowed alcove */
+    --muted: oklch(0.28 0.02 260);
+    --muted-foreground: oklch(0.65 0.01 60);
+
+    /* Accent: Treasure gold */
+    --accent: oklch(0.72 0.15 80);
+    --accent-foreground: oklch(0.15 0.02 260);
+
+    /* Destructive: Dragon's rage */
+    --destructive: oklch(0.55 0.22 25);
+    --destructive-foreground: oklch(0.98 0.01 60);
+
+    /* Success: Healing potion green */
+    --success: oklch(0.60 0.18 145);
+    --success-foreground: oklch(0.98 0.01 60);
+
+    /* Warning: Torch flame */
+    --warning: oklch(0.68 0.18 65);
+    --warning-foreground: oklch(0.15 0.02 260);
+
+    /* Border: Carved stone edge */
+    --border: oklch(0.32 0.03 260);
+    --input: oklch(0.32 0.03 260);
+    --ring: oklch(0.62 0.20 35);
+
+    --radius: 0.25rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    position: relative;
+  }
+
+  /* Subtle dungeon tile background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/generated/dk-tile.dim_512x512.png');
+    background-repeat: repeat;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+@layer utilities {
+  /* Pixel-art rendering */
+  .pixelated {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
+  /* Pixel-style borders (thicker, more defined) */
+  .pixel-border {
+    border-width: 2px;
+    border-style: solid;
+  }
+
+  /* Pixel-style shadow (hard edges, no blur) */
+  .pixel-shadow {
+    box-shadow: 4px 4px 0 oklch(0.12 0.02 260);
+  }
+
+  /* Pixel-style text (slightly bolder, more defined) */
+  .pixel-text {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-shadow: 1px 1px 0 oklch(0.12 0.02 260);
+  }
+}

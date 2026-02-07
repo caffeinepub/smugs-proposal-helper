@@ -1,0 +1,14 @@
+{
+  "frontend/src/App.tsx": "Main application component with Internet Identity authentication, 16-bit dragon/knight themed UI, tabbed navigation, and \"smugs proposal helper\" branding throughout signed-in and signed-out states.",
+  "frontend/src/components/auth/LoginButton.tsx": "Login/logout button component using Internet Identity with loading states and query cache clearing on logout.",
+  "frontend/src/components/neuron/NeuronManager.tsx": "Neuron configuration UI for saving neuron ID and displaying hotkey management instructions with links to the NNS dapp, since direct hotkey management is not implemented in this app.",
+  "frontend/src/components/proposals/ProposalForm.tsx": "Motion proposal creation form with prominent warning that backend NNS integration is not yet implemented, includes validation, confirmation dialog, and error handling for when the backend method becomes available.",
+  "frontend/src/components/history/ActivityHistory.tsx": "Activity history display with clickable proposal ID links to NNS dashboard, proper handling of missing proposal IDs, and status badges for hotkey and proposal attempts.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for backend operations including useSubmitMotionProposal that throws a descriptive error explaining the backend method is not yet implemented, and useRecordMotionAttempt for recording attempts.",
+  "frontend/src/index.css": "Global styles implementing 16-bit arcade dragon/knight theme with warm dungeon color palette (ember/gold/steel), pixel-art utilities, hard-edge shadows, and subtle background tile motif using OKLCH color system.",
+  "frontend/src/components/common/CanisterIdDisplay.tsx": "Reusable component displaying the application's canister ID in monospace with copy-to-clipboard functionality and user guidance for NNS hotkey configuration.",
+  "frontend/src/utils/canisterId.ts": "Utility function to retrieve the application's canister ID from build-time environment variables with fallback for local development.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with pixel-style shadows, arcade-appropriate font stacks, and theme tokens supporting the dragon/knight aesthetic.",
+  "frontend/index.html": "HTML entry point with updated document title \"smugs proposal helper\".",
+  "frontend/src/backend.d.ts": "TypeScript interface for backend canister matching the actual Motoko implementation with recordMotionAttempt for logging proposal attempts locally."
+}

@@ -1,0 +1,26 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-wire-the-proposal-ui-to-call-the-new-backend-real-submission-method-and-remove-the-current-simulated-submission-messaging-the-ui-must-show-a-clear-success-message-containing-the-real-proposal-id-when-the-network-call-succeeds-and-show-the-backend-error-message-when-it-fails-ensure-the-activity-history-proposals-table-displays-the-real-proposal-id-and-status-for-each-submission",
+      "featureTitle": "Wire the Proposal UI to call the new backend real-submission method and remove the current simulated submission messaging. The UI must show a clear success message containing the real proposal ID when the network call succeeds, and show the backend error message when it fails. Ensure the Activity History ‘Proposals’ table displays the real proposal ID and status for each submission.",
+      "files": [
+        "frontend/src/components/history/ActivityHistory.tsx",
+        "frontend/src/components/proposals/ProposalForm.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-13"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

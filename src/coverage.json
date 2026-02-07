@@ -1,0 +1,66 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-07T18:04:32.647Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 3,
+    "implemented": 1,
+    "items": [
+      {
+        "id": "REQ-11",
+        "summary": "Add a backend method that submits a real NNS motion proposal to the NNS Governance canister (instead of only recording a simulated attempt). The method must accept the caller’s selected neuron ID and the motion proposal text, perform the appropriate NNS Governance cross-canister call, and return the created NNS proposal ID on success or a clear error on failure.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-12",
+        "summary": "Update the backend proposal history recording so that submitting a real motion proposal records: (1) a pending attempt when submission starts, and then (2) updates history with success including the real proposal ID, or failure including the returned error message. Keep the existing cap of the last 10 proposal attempts per user.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-13",
+        "summary": "Wire the Proposal UI to call the new backend real-submission method and remove the current simulated submission messaging. The UI must show a clear success message containing the real proposal ID when the network call succeeds, and show the backend error message when it fails. Ensure the Activity History ‘Proposals’ table displays the real proposal ID and status for each submission.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/backend.d.ts",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/proposals/ProposalForm.tsx",
+          "frontend/src/components/history/ActivityHistory.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/backend.d.ts",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/proposals/ProposalForm.tsx",
+          "frontend/src/components/history/ActivityHistory.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/history/ActivityHistory.tsx",
+    "frontend/src/components/neuron/NeuronManager.tsx",
+    "frontend/src/components/proposals/ProposalForm.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useQueries.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

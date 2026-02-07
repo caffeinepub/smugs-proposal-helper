@@ -1,0 +1,71 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-07T18:04:32.645Z",
+  "summary": "The diff introduces data-model changes for proposal attempts (proposalId becomes optional) plus a state migration, and updates frontend components/hooks; however, there is no evidence of an implemented backend cross-canister call to NNS Governance or frontend wiring to a real submission method. The frontend currently still communicates that real submission is not implemented and the submit hook throws an error.",
+  "missing_requirements": [
+    {
+      "id": "REQ-11",
+      "requirement": "Add a backend method that submits a real NNS motion proposal to the NNS Governance canister via a cross-canister call, accepting neuron ID + proposal text, returning the real proposal ID on success or a descriptive error on failure, and restricted to authenticated users (#user).",
+      "reason": "In the provided backend diff summary (backend/main.mo truncated), there is no shown shared method that performs an NNS Governance cross-canister call and returns a real proposal ID. The frontend hook explicitly indicates the backend method does not exist yet.",
+      "evidence": [
+        "backend/main.mo (truncated; no submit method shown)",
+        "frontend/src/hooks/useQueries.ts (useSubmitMotionProposal throws 'not yet implemented' error)",
+        "frontend/src/components/proposals/ProposalForm.tsx (renders 'Backend Integration Required' warning)"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "requirement": "Update backend proposal history recording to add a pending attempt at submission start, then record a subsequent success (with real proposal ID) or failure (with error message), keeping the last 10 attempts per user.",
+      "reason": "While types/migration indicate proposalId is now optional and there are internal helpers for attempts, the diff is truncated before showing the proposal-attempt recording implementation and there is no evidence of the required two-step (pending then success/failure) history update tied to a real NNS submission.",
+      "evidence": [
+        "backend/main.mo (truncated at/near addProposalAttemptInternal)",
+        "backend/migration.mo (proposalId changed to optional in stored history)"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "requirement": "Wire the Proposal UI to call the new backend real-submission method, remove simulated submission messaging, show success with real proposal ID, show backend error on failure, and ensure Activity History displays real proposal IDs and statuses.",
+      "reason": "The submit hook does not call the backend; it throws an error stating real submission is not implemented. ProposalForm also displays a prominent warning that backend integration is required, which conflicts with the requirement to remove simulated/non-real submission messaging and to perform real submission. Activity history changes alone do not satisfy the wiring requirement.",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts (useSubmitMotionProposal always throws error; no actor.submitMotionProposal call)",
+        "frontend/src/components/proposals/ProposalForm.tsx (warning: 'Real NNS proposal submission is not yet implemented')",
+        "frontend/src/components/history/ActivityHistory.tsx (updated display logic, but does not demonstrate real submission wiring)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Frontend mutation hook for submitting proposals intentionally throws an error saying real NNS submission is not implemented, instead of calling a backend real-submission method.",
+      "reason": "REQ-13 requires wiring the UI to the new backend method for real submission; throwing an implementation-placeholder error is the opposite behavior and is not requested.",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "description": "Proposal form displays a prominent 'Backend Integration Required: Real NNS proposal submission is not yet implemented' warning banner.",
+      "reason": "REQ-13 requires removing simulated/non-real submission messaging and showing real proposal ID on success or backend error on failure; adding an explicit 'not implemented' banner is not requested and conflicts with the goal.",
+      "evidence": [
+        "frontend/src/components/proposals/ProposalForm.tsx"
+      ]
+    },
+    {
+      "description": "NeuronManager UI text says the app does not directly manage hotkeys and instructs users to use the NNS dapp for hotkey changes.",
+      "reason": "This build request is specifically about enabling real NNS motion proposal submission; changing hotkey-management messaging/behavior is not requested in REQ-11..REQ-13.",
+      "evidence": [
+        "frontend/src/components/neuron/NeuronManager.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.78,
+  "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/components/history/ActivityHistory.tsx",
+    "frontend/src/components/neuron/NeuronManager.tsx",
+    "frontend/src/components/proposals/ProposalForm.tsx",
+    "frontend/src/hooks/useQueries.ts",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 7,
+  "summary": "Build an ICP NNS governance app where signed-in users can add a neuron hotkey and create/submit real NNS motion proposals (not just simulate/record attempts) by entering proposal text, with saved per-user neuron settings, a modern 16-bit arcade (dragon/knight) UI theme, app renaming/tagline, and an in-app display of the app canister ID for neuron hotkeying.",
+  "architectural_notes": [
+    "Proposal submission must be manual (user-initiated), not automated/scheduled.",
+    "Expose/display the app canister ID in the UI (and keep it consistent with the deployed canister) to support users adding it as a neuron hotkey in the NNS.",
+    "Backend must be wired to the real NNS Governance canister (not a stub) to submit real proposals; proposal/hotkey flows must perform actual NNS calls and handle returned errors/IDs."
+  ],
+  "known_issues": [
+    "Current production app is not configured/wired to submit real NNS proposals; proposal submission is effectively simulated/recorded only and shows a modal warning."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-add-internet-identity-sign-in-and-require-the-user-to-be-signed-in-before-they-can-access-neuron-hotkey-management-or-motion-proposal-submission-screens",
+      "title": "Add Internet Identity sign-in and require the user to be signed in before they can access neuron hotkey management or motion proposal submission screens.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-a-ui-for-a-signed-in-user-to-configure-a-target-neuron-and-manage-hotkeys-for-that-neuron-by-submitting-nns-governance-manage-neuron-commands-add-hotkey-and-remove-hotkey",
+      "title": "Provide a UI for a signed-in user to configure a target neuron and manage hotkeys for that neuron by submitting NNS Governance 'manage_neuron' commands (add hotkey and remove hotkey).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-a-ui-for-a-signed-in-user-to-create-and-manually-submit-an-nns-motion-proposal-with-user-entered-text-including-a-final-review-confirmation-step-before-submission",
+      "title": "Provide a UI for a signed-in user to create and manually submit an NNS motion proposal with user-entered text, including a final review/confirmation step before submission.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-coherent-distinctive-visual-theme-for-the-app-colors-typography-spacing-and-layout-and-apply-it-consistently-across-the-sign-in-neuron-management-and-proposal-submission-pages-avoid-a-blue-purple-dominant-palette",
+      "title": "Add a coherent, distinctive visual theme for the app (colors, typography, spacing, and layout) and apply it consistently across the sign-in, neuron management, and proposal submission pages (avoid a blue/purple-dominant palette).",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-saved-neuron-setting-behaves-correctly-when-a-signed-in-user-has-an-existing-saved-selected-neuron-id-in-their-profile-the-neuron-id-input-in-the-neuron-tab-must-initialize-from-it-and-stay-in-sync-if-when-the-profile-query-updates-e-g-after-save-succeeds-or-after-a-reload",
+      "title": "Ensure the saved neuron setting behaves correctly: when a signed-in user has an existing saved selected neuron ID in their profile, the Neuron ID input in the Neuron tab must initialize from it and stay in sync if/when the profile query updates (e.g., after Save succeeds or after a reload).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-rename-the-app-to-smugs-proposal-helper-and-add-the-tagline-tell-the-network-how-you-really-feel-in-the-app-s-primary-header-area-and-the-signed-out-welcome-screen-also-update-the-html-document-title-accordingly",
+      "title": "Rename the app to “smugs proposal helper” and add the tagline “tell the network how you really feel” in the app’s primary header area and the signed-out welcome screen; also update the HTML document title accordingly.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-modern-16-bit-arcade-ui-theme-with-a-dragon-and-knight-vibe-consistently-across-sign-in-neuron-management-proposal-submission-and-history-pages-colors-typography-spacing-components-styling-while-keeping-the-ui-readable-and-accessible",
+      "title": "Apply a modern 16-bit arcade UI theme with a dragon-and-knight vibe consistently across sign-in, neuron management, proposal submission, and history pages (colors, typography, spacing, components styling), while keeping the UI readable and accessible.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-application-canister-id-prominently-in-the-ui-so-users-can-copy-it-for-adding-as-a-neuron-hotkey-in-the-nns",
+      "title": "Display the application canister ID prominently in the UI so users can copy it for adding as a neuron hotkey in the NNS.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-and-render-new-pixel-art-static-assets-that-support-the-16-bit-dragon-knight-theme-in-the-ui-e-g-header-emblem-and-or-subtle-background-motif-without-routing-images-through-the-backend",
+      "title": "Add and render new pixel-art static assets that support the 16-bit dragon/knight theme in the UI (e.g., header emblem and/or subtle background motif) without routing images through the backend.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-wire-the-proposal-ui-to-call-the-new-backend-real-submission-method-and-remove-the-current-simulated-submission-messaging-the-ui-must-show-a-clear-success-message-containing-the-real-proposal-id-when-the-network-call-succeeds-and-show-the-backend-error-message-when-it-fails-ensure-the-activity-history-proposals-table-displays-the-real-proposal-id-and-status-for-each-submission",
+      "title": "Wire the Proposal UI to call the new backend real-submission method and remove the current simulated submission messaging. The UI must show a clear success message containing the real proposal ID when the network call succeeds, and show the backend error message when it fails. Ensure the Activity History ‘Proposals’ table displays the real proposal ID and status for each submission.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "User sign-in/authentication for the governance app",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Allow signed-in user to add/configure a hotkey for an ICP neuron",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Provide UI to create and submit NNS motion proposals with user-entered text (manual submission)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Persist per-user configuration in the app canister: the user's selected neuron identifier and a local history of attempted hotkey changes and proposal submissions (timestamps + status + any returned IDs).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Rename the app to “smugs proposal helper” and add subtext/tagline “tell the network how you really feel”",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Update UI theme to a modern 16-bit arcade style with a dragon and knight theme (apply across app)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Display the application canister ID prominently in the UI so users can use it when hotkeying neurons in the NNS",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Implement real NNS Governance integration so the app actually submits manage_neuron and make_proposal calls to the NNS (enable real proposal submission)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add a backend method that submits a real NNS motion proposal to the NNS Governance canister (instead of only recording a simulated attempt). The method must accept the caller’s selected neuron ID and the motion proposal text, perform the appropriate NNS Governance cross-canister call, and return the created NNS proposal ID on success or a clear error on failure.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Update the backend proposal history recording so that submitting a real motion proposal records: (1) a pending attempt when submission starts, and then (2) updates history with success including the real proposal ID, or failure including the returned error message. Keep the existing cap of the last 10 proposal attempts per user.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "smugs proposal helper",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
